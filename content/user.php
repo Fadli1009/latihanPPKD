@@ -4,7 +4,7 @@ $query = mysqli_query($koneksi,"SELECT * from user ORDER BY id DESC");
 
 ?>
 
-<div class="container mt-4">
+<div class=" mt-4">
     <div class="row">
         <div class="col-sm-12">
             <div class="card">
@@ -12,6 +12,28 @@ $query = mysqli_query($koneksi,"SELECT * from user ORDER BY id DESC");
                     <h3>Data User</h3>
                 </div>
                 <div class="card-body">
+                    <div class="mb-3" align="right">
+                        <a href="?pg=tambah-user" class="btn btn-primary">Tambah </a>
+                    </div>
+                    <?php
+                    if(isset($_GET['tambah']) && $_GET['tambah']=="berhasil") :  ?>
+                    <div class="alert alert-success" role="alert">
+                        Data berhasil di simpan
+                    </div>
+                    <?php endif;?>
+                    <?php
+                    if(isset($_GET['hapus']) && $_GET['hapus']=="berhasil") :  ?>
+                    <div class="alert alert-success" role="alert">
+                        Data berhasil di hapus
+                    </div>
+                    <?php endif;?>
+                    <?php
+                    if(isset($_GET['edit']) && $_GET['edit']=="berhasil") :  ?>
+                    <div class="alert alert-success" role="alert">
+                        Data Mengedit Data
+                    </div>
+                    <?php endif;?>
+
                     <div class="table table-responsive">
                         <table class="table table-bordered">
                             <thead>
@@ -27,19 +49,22 @@ $query = mysqli_query($koneksi,"SELECT * from user ORDER BY id DESC");
                                 <?php $no = 1; while($rowUser = mysqli_fetch_assoc($query)): ?>
 
                                 <tr>
-                                    <td><?=$no?></td>
+                                    <td><?=$no++?></td>
                                     <td><?= $rowUser['nama_lengkap'] ?></td>
                                     <td><?= $rowUser['email']?></td>
-                                    <td><a href="" class="btn btn-warning">Edit</a></td>
+                                    <td><a href="?pg=tambah-user&edit=<?=$rowUser['id']?>"
+                                            class="btn btn-warning btn-sm">Edit</a> | <a
+                                            href="?pg=tambah-user&delete=<?=$rowUser['id']?>"
+                                            class="btn btn-danger btn-sm"
+                                            onclick="return confirm('Apakah anda ingin menghapus?')">Delete</a>
+                                    </td>
                                 </tr>
-                                <?php $no++; endwhile; ?>
+                                <?php endwhile; ?>
                             </tbody>
                         </table>
                     </div>
                 </div>
-                <div class="card-footer">
-                    <a href="#" class="btn btn-primary">Go somewhere</a>
-                </div>
+
             </div>
         </div>
     </div>
